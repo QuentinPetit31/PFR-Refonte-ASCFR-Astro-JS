@@ -1,10 +1,5 @@
-/* Ajoute les styles de base de Tailwind */
 @tailwind base;
-
-/* Ajoute les composants Tailwind */
 @tailwind components;
-
-/* Ajoute les utilitaires Tailwind */
 @tailwind utilities;
 
 * {

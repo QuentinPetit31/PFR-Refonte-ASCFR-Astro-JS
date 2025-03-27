@@ -1,16 +1,156 @@
----
+
 
 ---
+const matchTeams = [
+  {
+    src: "https://media.api-sports.io/football/teams/42.png",
+    alt: "Logo Arsenal",
+  },
+  {
+    src: "https://media.api-sports.io/football/teams/47.png",
+    alt: "Logo Tottenham",
+  },
+];
 
+const carouselItems = [
+  {
+    src: "/assets/1.webp",
+    alt: "Collection Adidas Arsenal - France",
+  },
+  {
+    src: "/assets/2.webp",
+    alt: "Adversaires Ligue des Champions",
+  },
+];
+---
+
+
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="/assets/ars.ico" />
+    <link href="/style.css" rel="stylesheet" />
+    <!-- Scripts externes -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.js" defer></script>
+    <title>ASCFR</title>
+  </head>
+</html>
+
+<style is:global>
+  @import "../styles/style.css";
+</style>
+
+
+  <body>
+    <!-- Header -->
+    <header class="header">
+      <div class="menu-button"></div>
+    </header>
+
+    <!-- Menu -->
+    <div id="menu" class="hidden"></div>
+
+<!-- Prochain match -->
+<div id="prochain-match">
+  <div class="match-teams">
+    {matchTeams.map((team) => (
+      <img
+        class="prochain-match img"
+        src={team.src}
+        alt={team.alt}
+      />
+    ))}
+    <span>vs</span>
+  </div>
+</div>
+
+
+    <a href="#" class="custom-link-blanc">voir calendrier</a>
+
+    <!-- Actualités -->
+    <h2>Actualités</h2>
+    <h3 id="carousel-title">Tirage au sort de la Ligue des Champions</h3>
+
+    <!-- Carousel -->
+    <div
+      id="carousel"
+      class="relative w-11/12 max-w-4xl ml-4 mr-4 justify-center rounded-full"
+      data-carousel="static"
+    >
+    <div
+    class="relative h-56 overflow-hidden rounded-lg md:h-96"
+  >
+    {carouselItems.map((item, index) => (
+      <div
+        class={`hidden duration-700 ease-in-out rounded-full ${
+          index === 0 ? "block" : ""
+        }`}
+        data-carousel-item="true"
+      >
+        <img
+          src={item.src}
+          class="absolute block w-full h-full object-cover"
+          alt={item.alt}
+        />
+      </div>
+    ))}
+  </div>
+  
+
+      <!-- Slider controls -->
+      <button
+        type="button"
+        class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+        data-carousel-prev
+      >
+        <span
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-50/50 group-hover:bg-red-600/70 group-focus:ring-4 group-focus:ring-white"
+        >
+          <img src="/assets/left arrow.png" alt="Previous" class="w-6 h-6" />
+          <span class="sr-only">Précédent</span>
+        </span>
+      </button>
+      <button
+        type="button"
+        class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+        data-carousel-next
+      >
+        <span
+          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-50/50 group-hover:bg-red-600/70 group-focus:ring-4 group-focus:ring-white"
+        >
+          <img src="/assets/right arrow.png" alt="Next" class="w-6 h-6" />
+          <span class="sr-only">Suivant</span>
+        </span>
+      </button>
+    </div>
+
+    <!-- Réservation -->
+    <h2>Reservation 2024/25</h2>
+    <img class="img-arrondie" src="/assets/Emirates_Stadium.JPG" />
+
+    <!-- Inscription -->
+    <h2>Inscription 2024/25</h2>
+    <a href="#" class="custom-link-blanc">Rejoins l'équipe ici</a>
+
+    <div class="img-top-footer">
+      <a target="_blank" aria-label="Vicoria Concordia Crescit">
+        <img
+          src="/assets/img top footer.png"
+          alt="Arsenal"
+          width="80%"
+          height="80%"
+        />
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer"></footer>
+    <script type="module" src="script.js"></script>
+  </body>
 </html>
