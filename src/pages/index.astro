@@ -1,6 +1,10 @@
-
-
 ---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Menu from "../components/Menu.astro";
+import Footer from "../components/Footer.astro";
+import FooterMenu from "../components/FooterMenu.astro";
+
 const matchTeams = [
   {
     src: "https://media.api-sports.io/football/teams/42.png",
@@ -24,133 +28,67 @@ const carouselItems = [
 ];
 ---
 
+<Layout>
+  <Header />
+  <!-- <Menu /> -->
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/assets/ars.ico" />
-    <link href="/style.css" rel="stylesheet" />
-    <!-- Scripts externes -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.js" defer></script>
-    <title>ASCFR</title>
-  </head>
-</html>
+  <!-- Prochain match -->
+  <section id="prochain-match" class="text-center py-6">
+    <div class="match-teams flex justify-center items-center gap-4">
+      {matchTeams.map((team) => (
+        <img class="w-20" src={team.src} alt={team.alt} />
+      ))}
+      <span class="text-xl">vs</span>
+    </div>
+    <a href="#" class="custom-link-blanc block mt-4">voir calendrier</a>
+  </section>
 
-<style is:global>
-  @import "../styles/style.css";
-</style>
-
-
-  <body>
-    <!-- Header -->
-    <header class="header">
-      <div class="menu-button"></div>
-    </header>
-
-    <!-- Menu -->
-    <div id="menu" class="hidden"></div>
-
-<!-- Prochain match -->
-<div id="prochain-match">
-  <div class="match-teams">
-    {matchTeams.map((team) => (
-      <img
-        class="prochain-match img"
-        src={team.src}
-        alt={team.alt}
-      />
-    ))}
-    <span>vs</span>
-  </div>
-</div>
-
-
-    <a href="#" class="custom-link-blanc">voir calendrier</a>
-
-    <!-- Actualités -->
-    <h2>Actualités</h2>
-    <h3 id="carousel-title">Tirage au sort de la Ligue des Champions</h3>
+  <!-- Actualités -->
+  <section class="text-center py-6">
+    <h2 class="text-2xl">Actualités</h2>
+    <h3 id="carousel-title" class="text-lg mt-2">Tirage au sort de la Ligue des Champions</h3>
 
     <!-- Carousel -->
-    <div
-      id="carousel"
-      class="relative w-11/12 max-w-4xl ml-4 mr-4 justify-center rounded-full"
-      data-carousel="static"
-    >
-    <div
-    class="relative h-56 overflow-hidden rounded-lg md:h-96"
-  >
-    {carouselItems.map((item, index) => (
-      <div
-        class={`hidden duration-700 ease-in-out rounded-full ${
-          index === 0 ? "block" : ""
-        }`}
-        data-carousel-item="true"
-      >
-        <img
-          src={item.src}
-          class="absolute block w-full h-full object-cover"
-          alt={item.alt}
-        />
+    <div id="carousel" class="relative w-11/12 max-w-4xl mx-auto mt-4" data-carousel="static">
+      <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+        {carouselItems.map((item, index) => (
+          <div
+            class={`hidden duration-700 ease-in-out ${
+              index === 0 ? "block" : ""
+            }`}
+            data-carousel-item="true"
+          >
+            <img src={item.src} class="block w-full h-full object-cover" alt={item.alt} />
+          </div>
+        ))}
       </div>
-    ))}
-  </div>
-  
 
       <!-- Slider controls -->
-      <button
-        type="button"
-        class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-prev
-      >
-        <span
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-50/50 group-hover:bg-red-600/70 group-focus:ring-4 group-focus:ring-white"
-        >
-          <img src="/assets/left arrow.png" alt="Previous" class="w-6 h-6" />
-          <span class="sr-only">Précédent</span>
-        </span>
+      <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4" data-carousel-prev>
+        <img src="/assets/left arrow.png" alt="Previous" class="w-6 h-6" />
+        <span class="sr-only">Précédent</span>
       </button>
-      <button
-        type="button"
-        class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
-        data-carousel-next
-      >
-        <span
-          class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-50/50 group-hover:bg-red-600/70 group-focus:ring-4 group-focus:ring-white"
-        >
-          <img src="/assets/right arrow.png" alt="Next" class="w-6 h-6" />
-          <span class="sr-only">Suivant</span>
-        </span>
+      <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4" data-carousel-next>
+        <img src="/assets/right arrow.png" alt="Next" class="w-6 h-6" />
+        <span class="sr-only">Suivant</span>
       </button>
     </div>
+  </section>
 
-    <!-- Réservation -->
-    <h2>Reservation 2024/25</h2>
-    <img class="img-arrondie" src="/assets/Emirates_Stadium.JPG" />
+  <!-- Réservation -->
+  <section class="text-center py-6">
+    <h2 class="text-3xl">Réservation 2024/25</h2>
+    <img class="img-arrondie mx-auto mt-4" src="/assets/Emirates_Stadium.JPG" />
+  </section>
 
-    <!-- Inscription -->
-    <h2>Inscription 2024/25</h2>
-    <a href="#" class="custom-link-blanc">Rejoins l'équipe ici</a>
+  <!-- Inscription -->
+  <section class="text-center">
+    <h2 class="text-2xl">Inscription 2024/25</h2>
+    <a href="#" class="custom-link-blanc block mt-2">Rejoins l'équipe ici</a>
+    <img src="/assets/players.png" alt="Joueurs Arsenal" class="mx-auto mt-4" />
+  </section>
 
-    <div class="img-top-footer">
-      <a target="_blank" aria-label="Vicoria Concordia Crescit">
-        <img
-          src="/assets/img top footer.png"
-          alt="Arsenal"
-          width="80%"
-          height="80%"
-        />
-      </a>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer"></footer>
-    <script type="module" src="/script.js"></script>
-  </body>
-</html>
+  <!-- Footer -->
+  <Footer />
+  <!-- <FooterMenu /> -->
+</Layout>
