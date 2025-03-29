@@ -53,73 +53,48 @@ fetch(url, {
   .catch((error) => console.error("Erreur:", error));
 
 /////////////////////////////////////////////////////////////////////////////
-
 // Fonction pour changer le titre du h3
 function updateTitle() {
   const carouselItems = document.querySelectorAll("[data-carousel-item]");
-  const activeItem = Array.from(carouselItems).find(
-    (item) => !item.classList.contains("hidden")
+  const activeItem = Array.from(carouselItems).find((item) =>
+    item.classList.contains("active")
   );
 
   const title = document.getElementById("carousel-title");
 
   if (activeItem) {
-    if (
-      activeItem.querySelector("img").alt ===
-      "Collection Adidas Arsenal - France"
-    ) {
-      title.textContent = "Collection Adidas Arsenal - France";
-    } else if (
-      activeItem.querySelector("img").alt === "Adversaires Ligue des Champions"
-    ) {
-      title.textContent = "Adversaires Ligue des Champions";
-    }
+    const alt = activeItem.querySelector("img").alt;
+    title.textContent = alt;
   }
 }
 
-// Écoute les événements de changement de l'image du carousel
-const carouselPrevButton = document.querySelector("[data-carousel-prev]");
-const carouselNextButton = document.querySelector("[data-carousel-next]");
+// Fonction de navigation entre les éléments du carousel
+function navigateCarousel(direction) {
+  const items = document.querySelectorAll("[data-carousel-item]");
+  const currentIndex = Array.from(items).findIndex((item) =>
+    item.classList.contains("active")
+  );
+
+  items[currentIndex].classList.remove("active");
+
+  let newIndex = direction === "next" ? currentIndex + 1 : currentIndex - 1;
+  if (newIndex >= items.length) newIndex = 0;
+  if (newIndex < 0) newIndex = items.length - 1;
+
+  items[newIndex].classList.add("active");
+  updateTitle();
+}
+
+// Ajoute des écouteurs d’événement
+document
+  .querySelector("[data-carousel-prev]")
+  .addEventListener("click", () => navigateCarousel("prev"));
+document
+  .querySelector("[data-carousel-next]")
+  .addEventListener("click", () => navigateCarousel("next"));
 
 // Met à jour le titre au démarrage
 updateTitle();
-
-// Ajoute des écouteurs d'événements sur les boutons de navigation du carousel
-carouselPrevButton.addEventListener("click", updateTitle);
-carouselNextButton.addEventListener("click", updateTitle);
-
-/////////////////////////////////////////////////////////////////////////////
-
-document.addEventListener("DOMContentLoaded", async () => {
-  try {
-    // Charge tous les composants
-    await Promise.all([
-      loadComponent("header", "partials/header.html"),
-      loadComponent("#menu", "partials/menu.html"),
-      loadComponent("footer", "partials/footer.html"),
-    ]);
-
-    initializeMenu();
-  } catch (error) {
-    console.error("Erreur lors du chargement des composants:", error);
-  }
-});
-
-async function loadComponent(selector, path) {
-  try {
-    const response = await fetch(path);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    const content = await response.text();
-
-    const element = document.querySelector(selector);
-    if (element) {
-      element.innerHTML = content;
-      console.log(`Composant ${path} chargé avec succès`);
-    }
-  } catch (error) {
-    console.error(`Erreur de chargement du composant ${path}:`, error);
-  }
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -14,6 +14,9 @@
 }
 
 /* Commun ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* ///////// BODY ///////////// */
+
 body {
   display: flex;
   flex-direction: column;
@@ -34,6 +37,8 @@ body::after {
   height: calc(100%);
   z-index: 1;
 }
+
+/* ///////// HEADER ///////////// */
 
 .header {
   display: flex;
@@ -118,6 +123,8 @@ p,
   margin-top: 10vw;
 }
 
+/* ///////// FOOTER ///////////// */
+
 .footer {
   margin-top: auto;
   display: flex;
@@ -174,10 +181,12 @@ p {
   margin-left: 15%;
 }
 
+/* ///////// FONT - POLICE ///////////// */
+
 h2 {
   font-family: caprasimo;
   color: rgb(255, 255, 255);
-  font-size: x-large !important;
+  font-size: xx-large !important;
   text-decoration: none;
   display: flex;
   flex-direction: column;
@@ -197,6 +206,8 @@ h3 {
   font-weight: lighter;
   margin-top: 5vw;
 }
+
+/* ///////// MATCH A VENIR API ///////////// */
 
 #prochain-match {
   font-family: caprasimo, sans-serif;
@@ -242,10 +253,18 @@ h3 {
 }
 
 .img-arrondie {
-  border-radius: 9999px;
-  margin-left: 5vw;
-  margin-right: 5vw;
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 60% / 100%;
+  overflow: hidden;
+  margin-top: 4vw;
+  margin-bottom: 4vw;
+  height: 270px;
 }
+
+/* ///////// MENU  ///////////// */
 
 #menu {
   position: fixed;
@@ -351,6 +370,69 @@ h3 {
 
 .hidden {
   display: none !important;
+}
+
+/* ///////// CAROUSEL ///////////// */
+
+.carousel-wrapper {
+  width: 90%;
+  max-width: 400px;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 60% / 100%;
+  overflow: hidden;
+  margin-top: 4vw;
+  margin-bottom: 4vw;
+  height: 270px;
+}
+
+.carousel-inner {
+  height: 100%;
+  width: 100%;
+}
+
+.carousel-item {
+  display: none;
+  height: 100%;
+}
+
+.carousel-item.active {
+  display: block;
+  height: 100%;
+}
+
+.carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.carousel-btn.left {
+  left: 0;
+}
+
+.carousel-btn.right {
+  right: 0;
+}
+
+.carousel-btn.left img {
+  width: 12vw;
+  height: 12vw;
+}
+
+.carousel-btn.right img {
+  width: 12vw;
+  height: 12vw;
 }
 
 /* fin Commun ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

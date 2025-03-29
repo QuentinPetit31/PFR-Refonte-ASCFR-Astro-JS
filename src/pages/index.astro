@@ -18,11 +18,11 @@ const matchTeams = [
 
 const carouselItems = [
   {
-    src: "/assets/1.webp",
+    src: "/assets/2.webp",
     alt: "Collection Adidas Arsenal - France",
   },
   {
-    src: "/assets/2.webp",
+    src: "/assets/1.webp",
     alt: "Adversaires Ligue des Champions",
   },
 ];
@@ -39,33 +39,27 @@ const carouselItems = [
     <h2>Actualité</h2>
     <h3 id="carousel-title" class="text-lg mt-2">Tirage au sort de la Ligue des Champions</h3>
 
-    <!-- Carousel -->
-     
-    <div id="carousel" class="relative w-11/12 max-w-4xl mx-auto mt-4" data-carousel="static">
-      <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
+    <div id="carousel" class="carousel-wrapper" data-carousel="static">
+      <div class="carousel-inner">
         {carouselItems.map((item, index) => (
           <div
-            class={`hidden duration-700 ease-in-out ${
-              index === 0 ? "block" : ""
-            }`}
+            class={`carousel-item ${index === 0 ? "active" : ""}`}
             data-carousel-item="true"
           >
-            <img src={item.src} class="block w-full h-full object-cover" alt={item.alt} />
+            <img src={item.src} alt={item.alt} />
           </div>
         ))}
       </div>
-
-      <!-- Slider controls -->
-      <button type="button" class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4" data-carousel-prev>
-        <img src="/assets/left arrow.png" alt="Previous" class="w-6 h-6" />
-        <span class="sr-only">Précédent</span>
+    
+      <!-- Flèches -->
+      <button type="button" class="carousel-btn left" data-carousel-prev>
+        <img src="/assets/left arrow.png" alt="Précédent" />
       </button>
-      <button type="button" class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4" data-carousel-next>
-        <img src="/assets/right arrow.png" alt="Next" class="w-6 h-6" />
-        <span class="sr-only">Suivant</span>
+      <button type="button" class="carousel-btn right" data-carousel-next>
+        <img src="/assets/right arrow.png" alt="Suivant" />
       </button>
     </div>
-  </section>
+    
 
   <!-- Réservation -->
   <section class="text-center py-6">
