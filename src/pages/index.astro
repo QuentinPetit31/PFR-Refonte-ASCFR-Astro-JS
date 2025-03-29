@@ -33,19 +33,29 @@ const carouselItems = [
   <!-- <Menu /> -->
 
   <!-- Prochain match -->
-  <section id="prochain-match" class="text-center py-6">
-    <div class="match-teams flex justify-center items-center gap-4">
-      {matchTeams.map((team) => (
-        <img class="w-20" src={team.src} alt={team.alt} />
-      ))}
-      <span class="text-xl">vs</span>
+  <h2 class="mt-6">Match à venir</h2>
+
+  <div id="prochain-match">
+    <div class="match-teams">
+      <img
+        class="prochain-match img"
+        src="https://media.api-sports.io/football/teams/42.png"
+        alt="Logo Arsenal"
+      />
+      <span>vs</span>
+      <img
+        class="prochain-match img"
+        src="https://media.api-sports.io/football/teams/47.png"
+        alt="Logo Tottenham"
+      />
     </div>
-    <a href="#" class="custom-link-blanc block mt-4">voir calendrier</a>
-  </section>
+  </div>
+
+  <a href="#" class="custom-link-blanc">voir calendrier</a>
 
   <!-- Actualités -->
   <section class="text-center py-6">
-    <h2 class="text-2xl">Actualités</h2>
+    <h2>Actualité</h2>
     <h3 id="carousel-title" class="text-lg mt-2">Tirage au sort de la Ligue des Champions</h3>
 
     <!-- Carousel -->
@@ -77,7 +87,7 @@ const carouselItems = [
 
   <!-- Réservation -->
   <section class="text-center py-6">
-    <h2 class="text-3xl">Réservation 2024/25</h2>
+    <h2 class="text-3xl mt-4">Réservation 2024/25</h2>
     <img class="img-arrondie mx-auto mt-4" src="/assets/Emirates_Stadium.JPG" />
   </section>
 

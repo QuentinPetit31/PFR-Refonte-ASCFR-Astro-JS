@@ -84,6 +84,7 @@ body::after {
 .menu-icon {
   width: 25%;
   height: auto;
+  margin-top: 5vw;
 }
 
 .custom-link-rouge {
@@ -215,6 +216,7 @@ h3 {
   vertical-align: middle;
   justify-content: center;
   margin-inline: 5vw;
+  margin-top: 5vw;
 }
 
 #prochain-match .league-logo {
