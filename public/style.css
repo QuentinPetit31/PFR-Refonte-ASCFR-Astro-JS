@@ -84,7 +84,7 @@ body::after {
 .menu-icon {
   width: 25%;
   height: auto;
-  margin-top: 5vw;
+  margin-top: 3vw;
 }
 
 .custom-link-rouge {
@@ -261,9 +261,14 @@ h3 {
 }
 
 .custom-shape {
-  height: 80px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 120px;
+  width: 100%;
   background: white;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0 70%);
+  z-index: 0;
 }
 
 .clip-triangle {

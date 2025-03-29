@@ -34,7 +34,7 @@ fetch(url, {
       });
 
       const matchInfo = `
-        <div class="match-header">Match à venir</div>
+        <div class="match-header mt-4">Match à venir</div>
         <div class="match-teams">
           <img src="${match.teams.home.logo}" alt="${match.teams.home.name}" width="10vw"> 
           <span>vs</span>
@@ -105,19 +105,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-function initializeMenu() {
-  const menuButton = document.querySelector("#menu-button");
-  const menu = document.querySelector("#menu");
-
-  if (menuButton && menu) {
-    menuButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      menu.classList.toggle("hidden");
-      console.log("Menu toggled");
-    });
-  }
-}
-
 async function loadComponent(selector, path) {
   try {
     const response = await fetch(path);
@@ -131,32 +118,6 @@ async function loadComponent(selector, path) {
     }
   } catch (error) {
     console.error(`Erreur de chargement du composant ${path}:`, error);
-  }
-}
-
-function initializeMenu() {
-  const menuButton = document.querySelector("#menu-button");
-  const menu = document.querySelector("#menu");
-
-  if (menuButton && menu) {
-    menuButton.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log("Menu cliqué");
-
-      // Vérifie si le menu est actuellement caché
-      const isHidden = menu.classList.contains("hidden");
-
-      // Toggle la classe et le style
-      menu.classList.toggle("hidden");
-      menu.style.display = isHidden ? "flex" : "none";
-
-      console.log("État du menu:", isHidden ? "affiché" : "caché");
-    });
-  } else {
-    console.log("Éléments manquants:", {
-      menuButton: !!menuButton,
-      menu: !!menu,
-    });
   }
 }
 

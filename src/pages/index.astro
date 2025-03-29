@@ -27,31 +27,12 @@ const carouselItems = [
   },
 ];
 ---
-
 <Layout>
   <Header />
   <!-- <Menu /> -->
 
-  <!-- Prochain match -->
-  <h2 class="mt-6">Match à venir</h2>
+  <section id="prochain-match"></section>
 
-  <div id="prochain-match">
-    <div class="match-teams">
-      <img
-        class="prochain-match img"
-        src="https://media.api-sports.io/football/teams/42.png"
-        alt="Logo Arsenal"
-      />
-      <span>vs</span>
-      <img
-        class="prochain-match img"
-        src="https://media.api-sports.io/football/teams/47.png"
-        alt="Logo Tottenham"
-      />
-    </div>
-  </div>
-
-  <a href="#" class="custom-link-blanc">voir calendrier</a>
 
   <!-- Actualités -->
   <section class="text-center py-6">
@@ -59,6 +40,7 @@ const carouselItems = [
     <h3 id="carousel-title" class="text-lg mt-2">Tirage au sort de la Ligue des Champions</h3>
 
     <!-- Carousel -->
+     
     <div id="carousel" class="relative w-11/12 max-w-4xl mx-auto mt-4" data-carousel="static">
       <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
         {carouselItems.map((item, index) => (
