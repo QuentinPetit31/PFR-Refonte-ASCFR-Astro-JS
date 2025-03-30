@@ -59,7 +59,7 @@ body::after {
   width: 100%;
   height: 50vw;
   background-color: white;
-  position: relative;
+  position: asolute;
   clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
   margin-top: linear-gradient(
     to right,
@@ -148,22 +148,6 @@ body::after {
   margin-top: 0;
 }
 
-.footer::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 10px;
-  background: linear-gradient(
-    to right,
-    rgba(2, 52, 116, 1) 30%,
-    transparent 30%,
-    transparent 70%,
-    rgba(183, 0, 0, 1) 70%
-  );
-}
-
 p {
   font-family: caprasimo;
   color: rgba(2, 52, 116, 1);
@@ -193,7 +177,7 @@ p {
   margin-left: 15%;
 }
 
-/* Bande bleue en bas à gauche */
+/* Trait bleu vertical à gauche */
 footer::before {
   content: "";
   position: absolute;
@@ -201,20 +185,33 @@ footer::before {
   left: 0;
   width: 10px;
   height: 100%;
-  background-color: rgba(2, 52, 116, 1);
-  z-index: 100;
+  background-color: #023474; /* bleu */
+  z-index: 1;
 }
 
-/* Bande rouge en bas à droite */
+/* Trait rouge vertical à droite */
 footer::after {
   content: "";
   position: absolute;
   bottom: 0;
   right: 0;
   width: 10px;
-  height: 49.8vw;
-  background-color: #b70000;
-  z-index: 100;
+  height: 13.7%;
+  background-color: #b70000; /* rouge */
+  z-index: 1010;
+}
+
+/* Bande horizontale en bas */
+.footer-bottom-bar {
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(
+    to right,
+    #023474 33.33%,
+    white 33.33%,
+    white 66.66%,
+    #b70000 66.66%
+  );
 }
 
 /* ///////// FONT - POLICE ///////////// */
@@ -420,7 +417,7 @@ h3 {
   display: none !important;
 }
 
-/* ///////// CAROUSEL ///////////// */
+/* /////////////////// CAROUSEL ///////////////////////// */
 
 .carousel-wrapper {
   width: 90%;
