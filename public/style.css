@@ -399,16 +399,15 @@ h3 {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  transform: scale(0.95) translateY(10px);
+  transition: opacity 0.8s ease-in-out,
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 1;
-  display: none;
 }
 
 .carousel-item.active {
-  display: block;
   opacity: 1;
-  transform: scale(1);
+  transform: scale(1) translateY(0);
   z-index: 2;
 }
 
@@ -418,7 +417,7 @@ h3 {
   object-fit: cover;
 }
 
-/* Flèches */
+/* ///////////////// Flèches carousel ////////////////// */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -431,12 +430,15 @@ h3 {
 }
 
 .carousel-btn img {
-  width: 12vw;
-  height: 12vw;
+  width: 15vw;
+  height: 15vw;
+  transition: transform 0.3s ease;
 }
 
-.carousel-btn:hover {
-  transform: translateY(-50%) scale(1.2);
+.carousel-btn:hover img {
+  animation: electric-glow 0.8s ease-in-out infinite;
+  transform: scale(0.9);
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
 }
 
 .carousel-btn.left {
