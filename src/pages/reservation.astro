@@ -1,0 +1,91 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+// import Menu from "../components/Menu.astro";
+import Footer from "../components/Footer.astro";
+// import FooterMenu from "../components/FooterMenu.astro";
+
+const matchTeams = [
+  {
+    src: "https://media.api-sports.io/football/teams/42.png",
+    alt: "Logo Arsenal",
+  },
+  {
+    src: "https://media.api-sports.io/football/teams/47.png",
+    alt: "Logo Tottenham",
+  },
+];
+
+const carouselItems = [
+  {
+    src: "/assets/2.webp",
+    alt: "Collection Adidas Arsenal - France",
+  },
+  {
+    src: "/assets/1.webp",
+    alt: "Adversaires Ligue des Champions",
+  },
+];
+---
+
+<Layout>
+  <Header />
+  <!-- <Menu /> -->
+
+  <!-- Réservation (vidéo + titre dans un wrapper) -->
+  <section class="py-6">
+    <div class="max-w-md mx-auto px-4 text-center">
+      <a href="/reservation" class="block hover:opacity-90 transition-opacity duration-300">
+        <h2 class="text-3xl mt-4 font-caprisimo">Réservation 2024/25</h2>
+        <video
+          src="/assets/tuto-reservation.mp4"
+          autoplay
+          loop
+          playsinline
+          muted
+          class="mt-4 w-full rounded-3xl border border-white"
+        ></video>
+      </a>
+    </div>
+  </section>
+
+  <!-- Texte d'infos + tarifs -->
+  <div class="max-w-md mx-auto px-4 text-justify text-white">
+    <p class="mb-4">
+      Point sur les réservations :
+      Suite au tirage au sort de la Champion’s League et l’annonce des dates, on a reçu énormément de demandes de billets, dont s’est occupé Eric pendant mon absence pendant mes vacances. Il n’y a pas eu d’annonce pour prévenir de l’ouverture des réservations, donc désolé pour ceux qui attendaient une annonce pour se manifester. À ce jour il reste toujours des places pour le match contre le Dinamo Zagreb à l’Emirates, en janvier.
+      Pour ceux qui n’ont toujours pas pu réserver de place cette saison, en plus de ce match de Champion’s League, il restera les matchs à domicile en Coupe de la Ligue (si on se qualifie), en coupe, et peut-être lors des prochains tours de Champion’s League. Il n’y aura pas forcément d’annonce à chaque fois donc n’hésitez pas à nous contacter dès l’annonce des dates de ces matchs.
+      En cas d’interrogations, vous pouvez toujours contacter Eric ou moi pour poser vos questions :
+    </p>
+
+    <p>
+      <a href="mailto:eric@arsenal-france.fr" class="text-white underline hover:text-red-300 break-all">
+        eric@arsenal-france.fr
+      </a>
+    </p>
+    <p class="mb-2">
+      <a href="mailto:admin@arsenal-france.fr" class="text-white underline hover:text-red-300 break-all">
+        admin@arsenal-france.fr
+      </a>
+    </p>
+
+    <p class="mb-6">Vince – 10/09/24</p>
+
+    <h3 class="text-xl font-regular mb-2">Tarif :</h3>
+    <p>Catégorie A - 125€</p>
+    <p>Catégorie B - 75€</p>
+    <p>Catégorie C - 50€</p>
+    <p class="mb-8">Catégorie D - 20€</p>
+  </div>
+
+  <!-- Inscription -->
+  <section class="text-center">
+    <h2 class="text-2xl font-caprisimo">Inscription 2024/25</h2>
+    <a href="#" class="custom-link-blanc block mt-2">Rejoins l'équipe ici</a>
+    <img src="/assets/players.png" alt="Joueurs Arsenal" class="mx-auto mt-4" />
+  </section>
+
+  <!-- Footer -->
+  <Footer />
+  <!-- <FooterMenu /> -->
+</Layout>
