@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 // import Menu from "../components/Menu.astro";
 import Footer from "../components/Footer.astro";
+import TableMatch from "../components/TableMatch.astro";
 // import FooterMenu from "../components/FooterMenu.astro";
 
 const matchTeams = [
@@ -24,6 +25,27 @@ const carouselItems = [
   {
     src: "/assets/1.webp",
     alt: "Adversaires Ligue des Champions",
+  },
+];
+
+const upcomingMatches = [
+  {
+    title: "J1. Wolves",
+    date: "17/08/24",
+    category: "B",
+    deadline: "30/06",
+    status: "ouvert",
+    slots: "5/10",
+    openingDate: "11/08/24",
+  },
+  {
+    title: "J2. Aston Villa",
+    date: "24/08/24",
+    category: "C",
+    deadline: "10/07",
+    status: "fermé",
+    slots: null,
+    openingDate: "14/08/24",
   },
 ];
 ---
@@ -48,6 +70,7 @@ const carouselItems = [
       </a>
     </div>
   </section>
+
 
   <!-- Texte d'infos + tarifs -->
   <div class="max-w-md mx-auto px-4 text-justify text-white">
@@ -78,9 +101,16 @@ const carouselItems = [
     <p class="mb-8">Catégorie D - 20€</p>
   </div>
 
+  
+  <!-- Tableau Match PL -->
+  <section class="px-4 pt-8  m-100 rounded-3xl text-center w-full border-white rounded-2xl  text-white mt-6 mt-100 ">
+    <h2 class="text-center text-white text-xl mt-6">Match PL à venir</h2>
+    <TableMatch matches={upcomingMatches} />
+  </section>
+
   <!-- Inscription -->
   <section class="text-center">
-    <h2 class="text-2xl font-caprisimo">Inscription 2024/25</h2>
+    <h2 class="text-2xl mt-10 font-caprisimo">Inscription 2024/25</h2>
     <a href="#" class="custom-link-blanc block mt-2">Rejoins l'équipe ici</a>
     <img src="/assets/players.png" alt="Joueurs Arsenal" class="mx-auto mt-4" />
   </section>

@@ -1,0 +1,37 @@
+---
+// Données simulées ici, à remplacer par une props ou API plus tard
+const { matches = [] } = Astro.props;
+---
+<table class="w-full border-white rounded-2xl  text-white mt-6 mt-100">
+  <thead>
+    <tr class="bg-red-700 text-center text-white text-base font-bold">
+      <th class="px-2 py-3 border border-white">Match</th>
+      <th class="px-2 py-3 border border-white">Statut</th>
+      <th class="px-2 py-3 border border-white">Ouverture</th>
+    </tr>
+  </thead>
+  <tbody>
+    {matches.map((match) => (
+      <tr class="text-center">
+        <td class="px-2 py-3 border border-white font-semibold">
+          {match.title}<br />
+          {match.date}<br />
+          Catégorie {match.category}<br />
+          Deadline {match.deadline}
+        </td>
+        <td class="px-2 py-3 border border-white">
+          {match.status === "ouvert" ? (
+            <span class="bg-green-500 text-white font-semibold px-2 py-1 rounded block">
+              Ouvert<br />Billets dispo {match.slots}
+            </span>
+          ) : (
+            <span class="bg-red-700 text-white font-semibold px-2 py-1 rounded block">
+              Fermé
+            </span>
+          )}
+        </td>
+        <td class="px-2 py-3 border border-white font-bold">{match.openingDate}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>
