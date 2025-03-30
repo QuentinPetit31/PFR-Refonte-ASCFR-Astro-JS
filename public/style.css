@@ -387,18 +387,29 @@ h3 {
 }
 
 .carousel-inner {
+  position: relative;
   height: 100%;
   width: 100%;
 }
 
 .carousel-item {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+  z-index: 1;
+  display: none;
 }
 
 .carousel-item.active {
   display: block;
-  height: 100%;
+  opacity: 1;
+  transform: scale(1);
+  z-index: 2;
 }
 
 .carousel-item img {
@@ -407,6 +418,7 @@ h3 {
   object-fit: cover;
 }
 
+/* Flèches */
 .carousel-btn {
   position: absolute;
   top: 50%;
@@ -415,6 +427,16 @@ h3 {
   border: none;
   z-index: 10;
   cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.carousel-btn img {
+  width: 12vw;
+  height: 12vw;
+}
+
+.carousel-btn:hover {
+  transform: translateY(-50%) scale(1.2);
 }
 
 .carousel-btn.left {
@@ -423,16 +445,6 @@ h3 {
 
 .carousel-btn.right {
   right: 0;
-}
-
-.carousel-btn.left img {
-  width: 12vw;
-  height: 12vw;
-}
-
-.carousel-btn.right img {
-  width: 12vw;
-  height: 12vw;
 }
 
 /* fin Commun ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */

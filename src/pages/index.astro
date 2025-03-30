@@ -34,32 +34,33 @@ const carouselItems = [
   <section id="prochain-match"></section>
 
 
-  <!-- Actualités -->
-  <section class="text-center py-6">
-    <h2>Actualité</h2>
-    <h3 id="carousel-title" class="text-lg mt-2">Tirage au sort de la Ligue des Champions</h3>
+<!-- Actualités -->
+<section class="text-center py-6">
+  <h2>Actualité</h2>
+  <h3 id="carousel-title" class="text-lg mt-2">Tirage au sort de la Ligue des Champions</h3>
 
-    <div id="carousel" class="carousel-wrapper" data-carousel="static">
-      <div class="carousel-inner">
-        {carouselItems.map((item, index) => (
-          <div
-            class={`carousel-item ${index === 0 ? "active" : ""}`}
-            data-carousel-item="true"
-          >
-            <img src={item.src} alt={item.alt} />
-          </div>
-        ))}
-      </div>
-    
-      <!-- Flèches -->
-      <button type="button" class="carousel-btn left" data-carousel-prev>
-        <img src="/assets/left arrow.png" alt="Précédent" />
-      </button>
-      <button type="button" class="carousel-btn right" data-carousel-next>
-        <img src="/assets/right arrow.png" alt="Suivant" />
-      </button>
+  <div id="carousel" class="carousel-wrapper">
+    <div class="carousel-inner">
+      {carouselItems.map((item, index) => (
+        <div
+          class={`carousel-item ${index === 0 ? 'active' : ''}`}
+          data-carousel-item="true"
+        >
+          <img src={item.src} alt={item.alt} />
+        </div>
+      ))}
     </div>
-    
+
+    <!-- Flèches -->
+    <button type="button" class="carousel-btn left" data-carousel-prev>
+      <img src="/assets/left-arrow.png" alt="Précédent" />
+    </button>
+    <button type="button" class="carousel-btn right" data-carousel-next>
+      <img src="/assets/right-arrow.png" alt="Suivant" />
+    </button>
+  </div>
+</section>
+
 
   <!-- Réservation -->
   <section class="text-center py-6">

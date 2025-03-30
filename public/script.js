@@ -52,7 +52,8 @@ fetch(url, {
   })
   .catch((error) => console.error("Erreur:", error));
 
-/////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Fonction pour changer le titre du h3
 function updateTitle() {
   const carouselItems = document.querySelectorAll("[data-carousel-item]");
@@ -68,7 +69,7 @@ function updateTitle() {
   }
 }
 
-// Fonction de navigation entre les éléments du carousel
+// Fonction de navigation entre les slides
 function navigateCarousel(direction) {
   const items = document.querySelectorAll("[data-carousel-item]");
   const currentIndex = Array.from(items).findIndex((item) =>
@@ -85,18 +86,23 @@ function navigateCarousel(direction) {
   updateTitle();
 }
 
-// Ajoute des écouteurs d’événement
-document
-  .querySelector("[data-carousel-prev]")
-  .addEventListener("click", () => navigateCarousel("prev"));
-document
-  .querySelector("[data-carousel-next]")
-  .addEventListener("click", () => navigateCarousel("next"));
+// Clic sur flèches
+document.querySelector("[data-carousel-prev]").addEventListener("click", () => {
+  navigateCarousel("prev");
+});
+document.querySelector("[data-carousel-next]").addEventListener("click", () => {
+  navigateCarousel("next");
+});
+
+// Rotation automatique toutes les 3s
+setInterval(() => {
+  navigateCarousel("next");
+}, 8000);
 
 // Met à jour le titre au démarrage
 updateTitle();
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Configuration Firebase
 const firebaseConfig = {
