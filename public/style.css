@@ -45,10 +45,11 @@ body::after {
   top: 36vw;
   right: 0;
   width: 10px;
-  bottom: 49.5vw;
+  bottom: 52vw;
   background-color: #023474;
   z-index: 2;
   pointer-events: none;
+  z-index: 10;
 }
 
 /* ///////// HEADER ///////////// */
@@ -59,7 +60,7 @@ body::after {
   width: 100%;
   height: 50vw;
   background-color: white;
-  position: asolute;
+  position: absolute;
   clip-path: polygon(0% 0%, 100% 0%, 100% 70%, 50% 100%, 0% 70%);
   margin-top: linear-gradient(
     to right,
@@ -177,28 +178,28 @@ p {
   margin-left: 15%;
 }
 
-/* Trait bleu vertical à gauche */
-footer::before {
+/* Bande bleue à gauche */
+.footer::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
   width: 10px;
   height: 100%;
-  background-color: #023474; /* bleu */
+  background-color: #023474; /* Bleu */
   z-index: 1;
 }
 
-/* Trait rouge vertical à droite */
-footer::after {
+/* Bande rouge à droite */
+.footer::after {
   content: "";
   position: absolute;
-  bottom: 0;
+  top: 0;
   right: 0;
   width: 10px;
-  height: 13.7%;
-  background-color: #b70000; /* rouge */
-  z-index: 1010;
+  height: 100%;
+  background-color: #b70000; /* Rouge */
+  z-index: 1;
 }
 
 /* Bande horizontale en bas */
