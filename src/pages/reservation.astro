@@ -94,7 +94,7 @@ const upcomingMatches = [
 
     <p class="mb-6">Vince – 10/09/24</p>
 
-    <h3 class="text-xl font-semibold mb-2">Tarif :</h3>
+    <h3 class="mb-2">Tarif :</h3>
     <p>Catégorie A - 125€</p>
     <p>Catégorie B - 75€</p>
     <p>Catégorie C - 50€</p>
@@ -102,11 +102,18 @@ const upcomingMatches = [
   </div>
 
   
-  <!-- Tableau Match PL -->
-  <section class="px-4 pt-8  m-100 rounded-3xl text-center w-full border-white rounded-2xl  text-white mt-6 mt-100 ">
-    <h2 class="text-center text-white text-xl mt-6">Match PL à venir</h2>
+<!-- Tableau Match PL -->
+<section class="px-4 pt-8 mb-10 text-white text-center">
+  <div class="flex items-center justify-center gap-4 mb-4 -ml-16">
+    <img src="/assets/logo-pl.png" alt="Premier League Logo" class="w-24 h-24 sm:w-24 sm:h-56" />
+    <h2 class="-ml-8">Match PL à venir</h2>
+  </div>
+
+  <div class="overflow-hidden rounded-3xl border border-white">
     <TableMatch matches={upcomingMatches} />
-  </section>
+  </div>
+</section>
+
 
   <!-- Inscription -->
   <section class="text-center">
