@@ -6,6 +6,11 @@
 
 /* Ajoute les utilitaires Tailwind */
 @tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Caprasimo&display=swap");
+
+body {
+  font-family: "Caprasimo", sans-serif;
+}
 
 * {
   box-sizing: border-box;
