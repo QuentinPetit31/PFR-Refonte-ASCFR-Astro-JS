@@ -86,6 +86,7 @@ body::after {
 .header-logo img {
   width: 20vw;
   height: auto;
+  margin-block: 2vw;
 }
 
 .header::after {

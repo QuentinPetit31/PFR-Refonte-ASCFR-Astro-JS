@@ -1,9 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-// import Menu from "../components/Menu.astro";
-import Footer from "../components/Footer.astro";
 import TableMatch from "../components/TableMatch.astro";
+import TutoPresentation from "../components/TutoPresentation.astro";
 // import FooterMenu from "../components/FooterMenu.astro";
 
 const matchTeams = [
@@ -51,23 +49,9 @@ const upcomingMatches = [
 ---
 
 <Layout>
-  <Header />
   <!-- <Menu /> -->
+  <TutoPresentation />
 
-  <!-- Réservation (vidéo + titre dans un wrapper) -->
-  <section class="py-6">
-    <div class="max-w-md mx-auto px-4 text-center">
-      <a href="/reservation" class="block hover:opacity-90 transition-opacity duration-300">
-        <h2 class="text-3xl mt-4 font-caprisimo">Réservation 2024/25</h2>
-        <video
-          src="/assets/tuto-reservation.mp4"
-          autoplay
-          playsinline
-          class="mt-4 w-full rounded-3xl border border-white"
-        ></video>
-      </a>
-    </div>
-  </section>
 
 
   <!-- Texte d'infos + tarifs -->
@@ -120,7 +104,4 @@ const upcomingMatches = [
     <img src="/assets/players.png" alt="Joueurs Arsenal" class="mx-auto mt-4" />
   </section>
 
-  <!-- Footer -->
-  <Footer />
-  <!-- <FooterMenu /> -->
 </Layout>

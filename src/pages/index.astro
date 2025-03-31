@@ -1,9 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Header from "../components/Header.astro";
-import Menu from "../components/Menu.astro";
-import Footer from "../components/Footer.astro";
-import FooterMenu from "../components/FooterMenu.astro";
+
 
 const matchTeams = [
   {
@@ -28,7 +25,6 @@ const carouselItems = [
 ];
 ---
 <Layout>
-  <Header />
   <!-- <Menu /> -->
 
   <section id="prochain-match"></section>
@@ -62,7 +58,7 @@ const carouselItems = [
 </section>
 
 
-<a href="/reservation.html">
+<a href="/reservation">
   <section class="text-center py-6 cursor-pointer hover:opacity-90 transition-opacity duration-300">
     <h2 class="text-3xl mt-4">Réservation 2024/25</h2>
     <img class="img-arrondie mx-auto mt-4" src="/assets/Emirates_Stadium.JPG" alt="Emirates Stadium" />
@@ -77,7 +73,4 @@ const carouselItems = [
     <img src="/assets/players.png" alt="Joueurs Arsenal" class="mx-auto mt-4" />
   </section>
 
-  <!-- Footer -->
-  <Footer />
-  <!-- <FooterMenu /> -->
 </Layout>
