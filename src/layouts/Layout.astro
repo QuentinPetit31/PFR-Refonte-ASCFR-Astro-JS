@@ -12,21 +12,20 @@ import Footer from "../components/Footer.astro"
 
     <link rel="icon" href="/assets/ars.ico" />
     <link href="/style.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js" defer></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js" defer></script>
+    <!-- Firebase v8 compatible avec le script.js -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <!-- Tailwind & Flowbite -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@1.6.5/dist/flowbite.min.js"></script>
 
-    <!-- Ton script -->
-    <script type="module" src="/script.js"></script>
+    <!-- Script principal -->
+<script type="module" src="/script.js"></script>
   </head>
   <body>
     <Header />
