@@ -1,95 +1,78 @@
-
--- --------------------------------------------SQL---------------------------------------------- --
-
-
---  Fichier SQL classique simulant une structure similaire à Firestore pour les matchs à venir
-
 -- Suppression si la table existe
-DROP TABLE IF EXISTS matchs;
+DROP TABLE IF EXISTS match_pl_24_25;
 
 -- Création de la table
-CREATE TABLE matchs (
+CREATE TABLE match_pl_24_25 (
   id SERIAL PRIMARY KEY,
-  rencontre VARCHAR(100),
-  
+  journee INT,
+  adversaire VARCHAR(50), 
   -- Champs de la "map" billet
-  categorie VARCHAR(10),
-  places_max INT,
-  places_prises INT,
-  est_ouvert BOOLEAN,
+  categorie VARCHAR(50),
+  placesMax INT,
+  placesPrises INT,
+  estOuvert BOOLEAN,
   
   -- Champs de la "map" date
-  date_match DATE,
+  dateMatch DATE,
   deadline DATE,
-  date_ouverture DATE
+  dateOuverture DATE
 );
 
 -- INSERT
-INSERT INTO matchs (title, date_match, category, deadline, is_open, places_max, places_prises, opening_date) VALUES
-('J1. Wolves', '2024-08-17', 'B', '2024-06-30', TRUE, 10, 4, '2024-08-11'),
-('J2. Aston Villa', '2024-08-24', 'A', '2024-07-10', FALSE, 10, 10, '2024-08-14');
+INSERT INTO match_pl_24_25 (journee, adversaire, categorie, dateMatch, deadline, estOuvert, placesMax, placesPrises, dateOuverture) VALUES
+(1, 'Wolves', 'B', '2024-08-17', '2024-06-30', TRUE, 10, 4, '2024-08-11'),
+(38, 'Newcastle United', 'A', '2025-08-24', '2025-07-10', FALSE, 10, 10, '2025-08-14');
 
 -- SELECT
--- Tous les matchs
-SELECT * FROM matchs;
+-- Tous les matchs saison 24/25
+SELECT * FROM match_pl_24_25;
 
 -- Matchs ouverts
-SELECT * FROM matchs WHERE is_open = TRUE;
+SELECT * FROM match_pl_24_25 WHERE estOuvert = TRUE;
 
 -- UPDATE
 -- Modifier les places prises pour le match J1
-UPDATE matchs SET places_prises = 5 WHERE title = 'J1. Wolves';
+UPDATE match_pl_24_25 SET placesPrises = 5 WHERE journee = 1 AND adversaire = 1;
 
 -- DELETE
 -- Supprimer un match spécifique
-DELETE FROM matchs WHERE title = 'J2. Aston Villa';
+DELETE FROM match_pl_24_25 WHERE journee = 2 AND adversaire = 2;
 
--- VERSION SQL  POUR GÉRER LES SOUHAITS DE MATCH DES ADHÉRENTS
+-- VERSION SQL POUR GÉRER LES DEMANDES DE MATCH DES ADHÉRENTS
 
 -- Table adherent
+DROP TABLE IF EXISTS adherent_24_25;
 CREATE TABLE adherent_24_25 (
   id SERIAL PRIMARY KEY,
   nom VARCHAR(100),
   prenom VARCHAR(100),
   mail VARCHAR(150),
-  date_inscription DATE,
+  dateInscription DATE,
   prioritaire BOOLEAN
 );
 
--- Table 
-CREATE TABLE match_pl_24_25 (
-  id VARCHAR(100) PRIMARY KEY,
-  rencontre VARCHAR(100),
-  categorie VARCHAR(10),
-  places_max INT,
-  places_prises INT,
-  est_ouvert BOOLEAN,
-  date_match DATE,
-  deadline DATE,
-  date_ouverture DATE
-);
-
 -- Table demande (relation n:n entre adherents et matchs)
+DROP TABLE IF EXISTS demande_pl;
 CREATE TABLE demande_pl (
   id SERIAL PRIMARY KEY,
-  adherent_id INT REFERENCES adherents(id) ON DELETE CASCADE,
-  match_id VARCHAR(100) REFERENCES matchs(id) ON DELETE CASCADE,
-  date_demande_pl TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  adherent_id INT REFERENCES adherent_24_25(id) ON DELETE CASCADE,
+  match_id INT REFERENCES match_pl_24_25(id) ON DELETE CASCADE,
+  dateDemandePl TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   statut VARCHAR(50) DEFAULT 'en attente'
 );
 
 -- Demande de Quentin
 INSERT INTO demande_pl (adherent_id, match_id, statut)
-VALUES (1, 'j38_newcastle_united', 'en attente');
+VALUES (1, 1, 'en attente');
 
 -- Toutes les demandes avec détails
 SELECT
   a.prenom || ' ' || a.nom AS adherent,
   a.mail,
-  m.rencontre,
-  s.statut,
-  s.date_demande_pl
-FROM demande_pl
-JOIN adherents a ON s.adherent_id = a.id
-JOIN matchs m ON s.match_id = m.id;
-
+  m.journee,
+  m.adversaire,
+  d.statut,
+  d.dateDemandePl
+FROM demande_pl d
+JOIN adherent_24_25 a ON d.adherent_id = a.id
+JOIN match_pl_24_25 m ON d.match_id = m.id;
