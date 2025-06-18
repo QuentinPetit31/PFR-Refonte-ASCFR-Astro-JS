@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
   // Récupération des matchs à venir depuis Firestore
 
-  db.collection("match_pl_a_venir_24_25")
+  db.collection("match_pl_a_venir_25_26")
     .orderBy("date.dateMatch")
     .get()
     .then((querySnapshot) => {

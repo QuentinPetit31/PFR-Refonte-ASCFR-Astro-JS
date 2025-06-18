@@ -1,38 +1,82 @@
 ---
-// Données simulées ici, à remplacer par une props ou API plus tard
+// Definition de l'interface pour les matchs
+interface Match {
+  placesDisp_rencontre: number;
+  placesMax_rencontre: number;
+  journee_rencontre?: string;
+  title?: string;
+  adversaire_rencontre: string;
+  date_rencontre?: string;
+  date?: string;
+  categorie_rencontre?: string;
+  category?: string;
+  deadlineInscription_rencontre?: string;
+  deadline?: string;
+  ouvertureDemande_rencontre?: string;
+  openingDate?: string;
+  statut_rencontre?: string;
+}
+
+// Récupération des données depuis l'API
+let matchesFromAPI = [];
+try {
+  const response = await fetch('http://localhost:4321/api/match_pl_a_venir_25_26');
+  if (response.ok) {
+    matchesFromAPI = await response.json();
+  } else {
+    console.error('Échec de récupération des matchs depuis l\'API');
+  }
+} catch (error) {
+  console.error('Erreur lors de la requête API:', error);
+}
+
+// Utilisation des données de l'API ou repli sur les props si l'API échoue
 const { matches = [] } = Astro.props;
+const displayMatches: Match[] = matchesFromAPI.length > 0 ? matchesFromAPI : matches;
 ---
+
 <table class="w-full text-white">
-    <thead>
-        <tr class="bg-blue-900 text-center text-white text-base font-bold">
-            <th class="px-2 py-3 border border-white">Match</th>
-        <th class="px-2 py-3 border border-white">Statut</th>
-        <th class="px-2 py-3 border border-white">Ouverture</th>
-      </tr>
-    </thead>
-    <tbody>
-      {matches.map((match) => (
+  <thead>
+    <tr class="bg-blue-900 text-center text-white text-base font-bold">
+      <th class="px-2 py-3 border border-white">Match</th>
+      <th class="px-2 py-3 border border-white">Statut</th>
+      <th class="px-2 py-3 border border-white">Ouverture</th>
+    </tr>
+  </thead>
+  <tbody>
+    {displayMatches.map((match: Match) => {
+      // Calcul du statut en fonction des places disponibles
+      const isOpen = match.placesDisp_rencontre < match.placesMax_rencontre;
+      const placesAvailable = match.placesMax_rencontre - match.placesDisp_rencontre;
+      const matchTitle = match.journee_rencontre ? `J${match.journee_rencontre}. ${match.adversaire_rencontre}` : match.title || match.adversaire_rencontre;
+      const matchDate = match.date_rencontre ? new Date(match.date_rencontre).toLocaleDateString('fr-FR') : match.date;
+      const matchCategory = match.categorie_rencontre || match.category;
+      const deadlineDate = match.deadlineInscription_rencontre ? new Date(match.deadlineInscription_rencontre).toLocaleDateString('fr-FR') : match.deadline;
+      const openingDate = match.ouvertureDemande_rencontre ? new Date(match.ouvertureDemande_rencontre).toLocaleDateString('fr-FR') : match.openingDate;
+      const status = match.statut_rencontre || (isOpen ? "ouvert" : "fermé");
+      
+      return (
         <tr class="text-center hover:bg-red-900 transition">
           <td class="px-2 py-3 border border-white ">
-            {match.title}<br />
-            {match.date}<br />
-            Catégorie {match.category}<br />
-            Deadline {match.deadline}
+            {matchTitle}<br />
+            {matchDate}<br />
+            Catégorie {matchCategory}<br />
+            Deadline {deadlineDate}
           </td>
           <td class="px-2 py-3 border border-white">
-            {match.status === "ouvert" ? (
-              <span class="bg-green-500 text-white px-2 py-1 rounded block">
-                Ouvert<br />Billets dispo {match.slots}
+            {status === "ouvert" || isOpen ? (
+              <span class="bg-green-500 text-white  px-2 py-1 rounded block">
+                Ouvert<br />Places dispo {placesAvailable}/{match.placesMax_rencontre || "10"}
               </span>
             ) : (
-              <span class="bg-red-700 text-white px-2 py-1 rounded block">
+              <span class="bg-red-700 text-white  px-2 py-1 rounded block">
                 Fermé
               </span>
             )}
           </td>
-          <td class="px-2 py-3 border border-white">{match.openingDate}</td>
+          <td class="px-2 py-3 border border-white ">{openingDate}</td>
         </tr>
-      ))}
-    </tbody>
-  </table>
-  
+      );
+    })}
+  </tbody>
+</table>
