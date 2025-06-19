@@ -7,15 +7,13 @@ USE ascfr_refonte;
 -- Table utilisateur
 CREATE TABLE utilisateur (
   id_utilisateur INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  prenom_utilisateur VARCHAR(50),
-  nom_utilisateur VARCHAR(50),
-  email_utilisateur VARCHAR(100),
+  prenom_utilisateur VARCHAR(100),
+  nom_utilisateur VARCHAR(100),
+  email_utilisateur VARCHAR(255),
   password_utilisateur VARCHAR(100),
   numeroAdherent_utilisateur VARCHAR(50),
   pseudo_utilisateur VARCHAR(30),
-  dateInscription_utilisateur DATE,
-  nombreCommentaire_utilisateur INT,
-  commentaire_utilisateur TEXT
+  dateInscription_utilisateur DATE
 ) ENGINE=InnoDB;
 
 -- Table role
@@ -42,23 +40,17 @@ CREATE TABLE sousCategorie (
   libelle_sousCategorie VARCHAR(50)
 ) ENGINE=InnoDB;
 
--- Table demande
-CREATE TABLE demande (
-  id_demande INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  statut_demande VARCHAR(50),
-  message_demande TEXT,
-  date_demande DATETIME
-) ENGINE=InnoDB;
-
--- Table adherent (sans clé étrangère)
+-- Table adherent
 CREATE TABLE adherent (
   id_adherent INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  nom_adherent VARCHAR(50),
-  prenom_adherent VARCHAR(50),
-  email_adherent VARCHAR(100),
+  numero_adherent VARCHAR(50),
+  nom_adherent VARCHAR(100),
+  prenom_adherent VARCHAR(100),
+  email_adherent VARCHAR(255),
+  telephone_adherent VARCHAR(20),
   dateInscription_adherent DATE,
-  tel_adherent INT,
-  statut_adherent BOOLEAN
+  statut_adherent TINYINT DEFAULT 1,
+  id_utilisateur INT UNSIGNED
 ) ENGINE=InnoDB;
 
 -- Table rencontre (sans clé étrangère)
@@ -72,10 +64,19 @@ CREATE TABLE rencontre (
   statut_rencontre VARCHAR(12),
   journee_rencontre INT,
   adversaire_rencontre VARCHAR(50),
-  placesMax_rencontre INT,
-  placesDisp_rencontre INT,
+  placesMax_rencontre INT DEFAULT 10,
+  placesDisp_rencontre INT DEFAULT 10,
   deadlineInscription_rencontre DATE,
   ouvertureDemande_rencontre DATE
+) ENGINE=InnoDB;
+
+-- Table demande
+CREATE TABLE demande (
+  id_demande INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  date_demande DATETIME,
+  commentaire_demande TEXT,
+  message_demande TEXT,
+  statut_demande VARCHAR(30) DEFAULT 'en attente'
 ) ENGINE=InnoDB;
 
 -- Table article (sans clé étrangère)
@@ -83,21 +84,24 @@ CREATE TABLE article (
   id_article INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   titre_article VARCHAR(100),
   date_article DATETIME,
-  contenu_article TEXT
+  contenu_article TEXT,
+  id_utilisateur INT UNSIGNED
 ) ENGINE=InnoDB;
 
 -- Table message (sans clé étrangère)
 CREATE TABLE message (
   id_Message INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   contenu_message TEXT,
-  date_message DATE
+  date_message DATE,
+  id_utilisateur INT UNSIGNED
 ) ENGINE=InnoDB;
 
 -- Table sujet (sans clé étrangère)
 CREATE TABLE sujet (
   id_sujet INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   titre_sujet VARCHAR(100),
-  dateCreation_sujet DATE
+  dateCreation_sujet DATE,
+  id_Message INT UNSIGNED
 ) ENGINE=InnoDB;
 
 -- Table blacklist
@@ -113,22 +117,6 @@ ALTER TABLE categorie ADD COLUMN id_forum INT UNSIGNED;
 
 -- Ajout de clé étrangère à sousCategorie
 ALTER TABLE sousCategorie ADD COLUMN id_categorie INT UNSIGNED;
-
--- Ajout de clés étrangères à adherent
-ALTER TABLE adherent ADD COLUMN id_utilisateur INT UNSIGNED;
-ALTER TABLE adherent ADD COLUMN id_demande INT UNSIGNED;
-
--- Ajout de clé étrangère à rencontre
-ALTER TABLE rencontre ADD COLUMN id_demande INT UNSIGNED;
-
--- Ajout de clé étrangère à article
-ALTER TABLE article ADD COLUMN id_utilisateur INT UNSIGNED;
-
--- Ajout de clé étrangère à message
-ALTER TABLE message ADD COLUMN id_utilisateur INT UNSIGNED;
-
--- Ajout de clé étrangère à sujet
-ALTER TABLE sujet ADD COLUMN id_Message INT UNSIGNED;
 
 -- 3. Création des tables de relation N:M
 
@@ -219,10 +207,6 @@ ALTER TABLE sousCategorie ADD CONSTRAINT fk_sousCategorie_categorie FOREIGN KEY 
 
 -- Contraintes sur adherent
 ALTER TABLE adherent ADD CONSTRAINT fk_adherent_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
-ALTER TABLE adherent ADD CONSTRAINT fk_adherent_demande FOREIGN KEY (id_demande) REFERENCES demande(id_demande);
-
--- Contraintes sur rencontre
-ALTER TABLE rencontre ADD CONSTRAINT fk_rencontre_demande FOREIGN KEY (id_demande) REFERENCES demande(id_demande);
 
 -- Contraintes sur article
 ALTER TABLE article ADD CONSTRAINT fk_article_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
@@ -277,7 +261,7 @@ ALTER TABLE classer ADD CONSTRAINT fk_classer_categorie FOREIGN KEY (id_categori
 ALTER TABLE adherer ADD CONSTRAINT fk_adherer_utilisateur FOREIGN KEY (id_utilisateur) REFERENCES utilisateur(id_utilisateur);
 ALTER TABLE adherer ADD CONSTRAINT fk_adherer_adherent FOREIGN KEY (id_adherent) REFERENCES adherent(id_adherent);
 
--- 5. Données d'exemple (facultatif)
+-- 5. Données d'exemple
 INSERT INTO utilisateur (prenom_utilisateur, nom_utilisateur, email_utilisateur, pseudo_utilisateur, dateInscription_utilisateur) VALUES
 ('Quentin', 'Petit', 'quentinpetit@gmail.com', 'QPetit', '2024-07-01'),
 ('Maria', 'Pietri', 'mariap@gmail.com', 'MPietri', '2025-04-01');
@@ -299,14 +283,16 @@ INSERT INTO sousCategorie (libelle_sousCategorie, id_categorie) VALUES
 ('Champions League', 1),
 ('Rumeurs', 2);
 
-INSERT INTO demande (statut_demande, message_demande, date_demande) VALUES
-('en attente', 'Demande pour le match contre Wolves', '2024-08-12 14:30:00');
+INSERT INTO demande (statut_demande, message_demande, date_demande, commentaire_demande) VALUES
+('en attente', 'Demande pour le match contre Wolves', '2024-08-12 14:30:00', 'Commentaire test');
 
-INSERT INTO adherent (nom_adherent, prenom_adherent, email_adherent, dateInscription_adherent, statut_adherent) VALUES
-('Petit', 'Quentin', 'quentinpetit@gmail.com', '2024-07-01', TRUE);
+-- Insertion dans adherent 
+INSERT INTO adherent (numero_adherent, nom_adherent, prenom_adherent, email_adherent, dateInscription_adherent, telephone_adherent, statut_adherent) VALUES
+('123456', 'Petit', 'Quentin', 'quentinpetit@gmail.com', '2024-07-01', '0601020304', TRUE),
+('654321', 'Henry', 'Thierry', 'th14@arsenal.fr', '2024-07-02', '0714141414', TRUE);
 
 -- Mettre à jour avec les clés étrangères
-UPDATE adherent SET id_utilisateur = 1, id_demande = 1 WHERE id_adherent = 1;
+UPDATE adherent SET id_utilisateur = 1 WHERE id_adherent = 1;
 
 -- Insertion des matchs à domicile d'Arsenal pour la saison 2025/2026
 INSERT INTO rencontre (journee_rencontre, adversaire_rencontre, categorie_rencontre, date_rencontre, lieu_rencontre, deadlineInscription_rencontre, statut_rencontre, placesMax_rencontre, placesDisp_rencontre, ouvertureDemande_rencontre, competition_rencontre, saison_rencontre) VALUES
@@ -345,15 +331,12 @@ INSERT INTO rencontre (journee_rencontre, adversaire_rencontre, categorie_rencon
 (null, 'Burnley', 'C', '2024-09-23', 'Emirates Stadium', '2024-09-09', 'Ouvert', 10, 10, '2024-09-17', 'Carabao Cup', '2024-2025'),
 (null, 'Leicester City', 'C', '2024-10-29', 'Emirates Stadium', '2024-10-15', 'Ouvert', 10, 9, '2024-10-23', 'Carabao Cup', '2024-2025');
 
--- Mettre à jour avec les clés étrangères
-UPDATE rencontre SET id_demande = 1 WHERE id_rencontre = 1;
+-- Ajouter des relations pour les exemples
+INSERT INTO formuler (id_adherent, id_demande) VALUES (1, 1);
+INSERT INTO cibler (id_rencontre, id_demande) VALUES (1, 1);
+INSERT INTO occuper (id_utilisateur, id_role) VALUES (1, 2), (2, 1);
 
-INSERT INTO occuper (id_utilisateur, id_role) VALUES
-(1, 2),
-(2, 1);
+-- Ajouter des index pour améliorer les performances
+CREATE INDEX idx_adherent_numero ON adherent (numero_adherent);
+CREATE INDEX idx_rencontre_date ON rencontre (date_rencontre);
 
-INSERT INTO formuler (id_adherent, id_demande) VALUES
-(1, 1);
-
-INSERT INTO cibler (id_rencontre, id_demande) VALUES
-(1, 1);

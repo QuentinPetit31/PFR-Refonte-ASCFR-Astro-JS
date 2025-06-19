@@ -25,27 +25,6 @@ const carouselItems = [
     alt: "Adversaires Ligue des Champions",
   },
 ];
-
-const upcomingMatches = [
-  {
-    title: "J1. Wolves",
-    date: "17/08/24",
-    category: "B",
-    deadline: "30/06",
-    status: "ouvert",
-    slots: "5/10",
-    openingDate: "11/08/24",
-  },
-  {
-    title: "J2. Aston Villa",
-    date: "24/08/24",
-    category: "C",
-    deadline: "10/07",
-    status: "fermé",
-    slots: null,
-    openingDate: "14/08/24",
-  },
-];
 ---
 
 <Layout>
@@ -92,7 +71,7 @@ const upcomingMatches = [
   </div>
 
   <div class="overflow-hidden rounded-3xl border border-white">
-    <TableMatch matches={upcomingMatches} />
+    <TableMatch/>
   </div>
 </section>
 

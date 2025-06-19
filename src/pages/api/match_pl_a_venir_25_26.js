@@ -21,7 +21,6 @@ export async function GET() {
     console.log("Nombre total de rencontres:", countResult[0].total);
 
     // Exécution de la requête SQL pour récupérer les matchs PL à venir
-    // Exécution de la requête SQL pour récupérer les matchs PL à venir
     const [rows] = await connection.execute(
       "SELECT * FROM rencontre WHERE competition_rencontre = 'Premier League' OR competition_rencontre IS NULL ORDER BY date_rencontre ASC LIMIT 10"
     );

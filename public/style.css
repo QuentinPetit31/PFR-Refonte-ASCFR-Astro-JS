@@ -501,6 +501,36 @@ h3 {
   right: 0;
 }
 
+/* ///////// MODAL DE RÉSERVATION ///////////// */
+#booking-modal .bg-gradient-to-b {
+  background: linear-gradient(to bottom, #b70000, #930000);
+}
+
+#modal-match-info {
+  background-color: #023474 !important;
+}
+
+#booking-modal button[type="submit"],
+#booking-modal #close-success {
+  background-color: #023474 !important;
+}
+
+#booking-modal input,
+#booking-modal textarea {
+  border: 1px solid white;
+}
+
+#booking-modal input::placeholder,
+#booking-modal textarea::placeholder {
+  color: #629bf0 !important;
+  opacity: 1;
+}
+
+#booking-modal input:focus::placeholder,
+#booking-modal textarea:focus::placeholder {
+  color: white !important;
+}
+
 /* fin Commun ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 /* Mobile ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
