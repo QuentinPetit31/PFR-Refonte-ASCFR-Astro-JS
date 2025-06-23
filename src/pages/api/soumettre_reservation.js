@@ -1,5 +1,5 @@
 import mysql from "mysql2/promise";
-
+export const prerender = false;
 export async function POST({ request }) {
   let connection;
 
@@ -7,28 +7,29 @@ export async function POST({ request }) {
     console.log("Début du traitement de la demande");
 
     // Récupération et parsing des données
-    const bodyText = await request.text();
-    console.log("Données brutes reçues:", bodyText);
+    const { matchId, memberNumber, name, firstname, email, phone, message } =
+      await request.json();
+    // console.log("Données brutes reçues:", bodyText);
 
-    let data;
-    try {
-      data = JSON.parse(bodyText);
-      console.log("Données JSON parsées:", data);
-    } catch (jsonError) {
-      console.error("Erreur lors du parsing JSON:", jsonError);
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: "Format de données invalide",
-          error: jsonError.message,
-        }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
-    }
+    // let data;
+    // try {
+    //   data = JSON.parse(bodyText);
+    //   console.log("Données JSON parsées:", data);
+    // } catch (jsonError) {
+    //   console.error("Erreur lors du parsing JSON:", jsonError);
+    //   return new Response(
+    //     JSON.stringify({
+    //       success: false,
+    //       message: "Format de données invalide",
+    //       error: jsonError.message,
+    //     }),
+    //     { status: 400, headers: { "Content-Type": "application/json" } }
+    //   );
+    // }
 
     // Récupération des champs du formulaire
-    const { matchId, memberNumber, name, firstname, email, phone, message } =
-      data;
+    // const { matchId, memberNumber, name, firstname, email, phone, message } =
+    //   data;
 
     // Validation des données
     if (!matchId || !memberNumber || !name || !firstname || !email || !phone) {
@@ -36,18 +37,6 @@ export async function POST({ request }) {
         JSON.stringify({
           success: false,
           message: "Tous les champs obligatoires doivent être remplis",
-        }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
-    }
-
-    // Conversion de l'ID du match en nombre
-    const numericMatchId = parseInt(matchId, 10);
-    if (isNaN(numericMatchId)) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          message: "L'identifiant du match est invalide",
         }),
         { status: 400, headers: { "Content-Type": "application/json" } }
       );
@@ -67,55 +56,17 @@ export async function POST({ request }) {
     console.log("Transaction démarrée");
 
     try {
-      // Vérifier si le match existe et s'il reste des places
-      const [matchCheck] = await connection.execute(
-        "SELECT placesDisp_rencontre FROM rencontre WHERE id_rencontre = ? AND placesDisp_rencontre > 0",
-        [numericMatchId]
-      );
-
-      if (matchCheck.length === 0) {
-        throw new Error(
-          "Ce match n'existe pas ou n'a plus de places disponibles"
-        );
-      }
-
-      // Vérifier si l'adhérent existe avec ce numéro
-      const [adherents] = await connection.execute(
-        "SELECT id_adherent FROM adherent WHERE numero_adherent = ?",
-        [memberNumber]
-      );
-
-      let adherentId;
-
-      if (adherents.length === 0) {
-        console.log("Création d'un nouvel adhérent");
-
-        // Créer un utilisateur d'abord
-        const [userResult] = await connection.execute(
-          "INSERT INTO utilisateur (prenom_utilisateur, nom_utilisateur, email_utilisateur, numeroAdherent_utilisateur, dateInscription_utilisateur) VALUES (?, ?, ?, ?, CURDATE())",
-          [firstname, name, email, memberNumber]
-        );
-
-        const userId = userResult.insertId;
-        console.log("Nouvel utilisateur créé avec ID:", userId);
-
-        // Créer l'adhérent lié à l'utilisateur
-        const [adherentResult] = await connection.execute(
-          "INSERT INTO adherent (numero_adherent, nom_adherent, prenom_adherent, email_adherent, telephone_adherent, dateInscription_adherent, statut_adherent, id_utilisateur) VALUES (?, ?, ?, ?, ?, CURDATE(), 1, ?)",
-          [memberNumber, name, firstname, email, phone, userId]
-        );
-
-        adherentId = adherentResult.insertId;
-        console.log("Nouvel adhérent créé avec ID:", adherentId);
-      } else {
-        adherentId = adherents[0].id_adherent;
-        console.log("Adhérent existant trouvé avec ID:", adherentId);
-      }
-
       // Créer une nouvelle demande
       const [demandeResult] = await connection.execute(
-        "INSERT INTO demande (date_demande, commentaire_demande, message_demande, statut_demande) VALUES (NOW(), ?, ?, 'en attente')",
-        [message || "", message || ""]
+        "INSERT INTO demande (date_demande, commentaire_demande, message_demande, statut_demande, nom_demande, prenom_demande, email_demande, telephone_demande) VALUES (NOW(), ?, ?, 'en attente', ?, ?, ?, ?)",
+        [
+          message || "",
+          `Demande pour le match ID ${matchId}`,
+          name,
+          firstname,
+          email,
+          phone,
+        ]
       );
 
       const demandeId = demandeResult.insertId;
@@ -124,21 +75,21 @@ export async function POST({ request }) {
       // Lier la demande à l'adhérent
       await connection.execute(
         "INSERT INTO formuler (id_adherent, id_demande) VALUES (?, ?)",
-        [adherentId, demandeId]
+        [memberNumber, demandeId]
       );
       console.log("Relation formuler créée");
 
       // Lier la demande au match
       await connection.execute(
         "INSERT INTO cibler (id_rencontre, id_demande) VALUES (?, ?)",
-        [numericMatchId, demandeId]
+        [matchId, demandeId]
       );
       console.log("Relation cibler créée");
 
       // Mettre à jour le nombre de places (utilisation du FOR UPDATE pour éviter les conditions de course)
       await connection.execute(
         "UPDATE rencontre SET placesDisp_rencontre = placesDisp_rencontre - 1 WHERE id_rencontre = ? AND placesDisp_rencontre > 0",
-        [numericMatchId]
+        [matchId]
       );
       console.log("Nombre de places mis à jour");
 

@@ -1,17 +1,17 @@
-<header class="header">
+<header class="header relative">
   <!-- Forme visuelle blanche -->
-  <div class="custom-shape"></div>
+  <div class="custom-shape h-32 sm:h-40 md:h-48 lg:h-16 clip-path-triangle"></div> <!-- Réduction significative de la hauteur en PC -->
 
   <!-- Contenu par-dessus -->
-  <div class="header-content relative z-10 -mt-3 text-center">
-    <a href="/">
-      <div class="header-logo img">
-        <img src="/assets/logo.jpg" alt="Arsenal Supporter Club France" />
+  <div class="header-content relative z-10 text-center">
+    <a href="/" class="block">
+      <div class="header-logo img mx-auto w-24 h-24 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-48 lg:h-48">
+        <img src="/assets/logo.jpg" alt="Arsenal Supporter Club France" class="w-full h-full object-contain" />
       </div>
     </a>
-    <a href="#" class="custom-link-rouge text-2xl -mt-2" id="menu-button">
+    <a href="#" class="custom-link-rouge text-lg sm:text-lg md:text-xl lg:text-2xl mt-2 sm:mt-[-20px] md:mt-4 lg:mt-6" id="menu-button">
       Menu
-      <img src="/assets/Menu.jpg" alt="Menu Icon" class="menu-icon scale-150 -mt-6" />
+      <img src="/assets/Menu.jpg" alt="Menu Icon" class="menu-icon mx-auto scale-100 sm:scale-100 md:scale-125 lg:scale-150 mt-2 sm:mt-[-20px] md:mt-4 lg:mt-6" />
     </a>
   </div>
 </header>

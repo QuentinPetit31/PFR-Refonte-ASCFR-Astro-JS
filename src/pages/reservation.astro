@@ -31,56 +31,91 @@ const carouselItems = [
   <!-- <Menu /> -->
   <TutoPresentation />
 
-
-
   <!-- Texte d'infos + tarifs -->
-  <div class="max-w-md mx-auto px-4 text-justify text-white">
-    <p class="mb-4">
+  <div class="max-w-md mx-auto px-4 text-justify overflow-hidden text-white sm:max-w-lg md:max-w-2xl lg:max-w-4xl">
+    <p class="mb-4 overflow-hidden text-sm sm:text-base md:text-lg">
       Point sur les réservations :
       Suite au tirage au sort de la Champion’s League et l’annonce des dates, on a reçu énormément de demandes de billets, dont s’est occupé Eric pendant mon absence pendant mes vacances. Il n’y a pas eu d’annonce pour prévenir de l’ouverture des réservations, donc désolé pour ceux qui attendaient une annonce pour se manifester. À ce jour il reste toujours des places pour le match contre le Dinamo Zagreb à l’Emirates, en janvier.
       Pour ceux qui n’ont toujours pas pu réserver de place cette saison, en plus de ce match de Champion’s League, il restera les matchs à domicile en Coupe de la Ligue (si on se qualifie), en coupe, et peut-être lors des prochains tours de Champion’s League. Il n’y aura pas forcément d’annonce à chaque fois donc n’hésitez pas à nous contacter dès l’annonce des dates de ces matchs.
       En cas d’interrogations, vous pouvez toujours contacter Eric ou moi pour poser vos questions :
     </p>
 
-    <p>
-      <a href="mailto:eric@arsenal-france.fr" class="text-white underline hover:text-red-300 break-all">
+    <p class="text-sm overflow-hidden sm:text-base md:text-lg">
+      <a href="mailto:eric@arsenal-france.fr" class="text-white underline overflow-hidden hover:text-red-300 break-all">
         eric@arsenal-france.fr
       </a>
     </p>
-    <p class="mb-2">
+    <p class="mb-2 overflow-hidden text-sm sm:text-base md:text-lg">
       <a href="mailto:admin@arsenal-france.fr" class="text-white underline hover:text-red-300 break-all">
         admin@arsenal-france.fr
       </a>
     </p>
 
-    <p class="mb-6">Vince – 10/09/24</p>
+    <p class="mb-6 overflow-hidden text-sm sm:text-base md:text-lg">Vince – 10/09/24</p>
 
-    <h3 class="mb-2">Tarif :</h3>
-    <p>Catégorie A - 125€</p>
-    <p>Catégorie B - 75€</p>
-    <p>Catégorie C - 50€</p>
-    <p class="mb-8">Catégorie D - 20€</p>
+    <h3 class="mb-2 overflow-hidden text-base sm:text-lg md:text-xl">Tarif :</h3>
+    <p class="text-sm overflow-hidden sm:text-base md:text-lg">Catégorie A - 125€</p>
+    <p class="text-sm overflow-hidden sm:text-base md:text-lg">Catégorie B - 75€</p>
+    <p class="text-sm overflow-hidden sm:text-base md:text-lg">Catégorie C - 50€</p>
+    <p class="mb-8 overflow-hidden text-sm sm:text-base md:text-lg">Catégorie D - 20€</p>
   </div>
 
-  
-<!-- Tableau Match PL -->
-<section class="px-4 pt-8 mb-10 text-white text-center">
-  <div class="flex items-center justify-center gap-4 mb-4 -ml-16">
-    <img src="/assets/logo-pl.png" alt="Premier League Logo" class="w-24 h-24 sm:w-24 sm:h-56" />
-    <h2 class="-ml-8">Match PL à venir</h2>
-  </div>
+  <!-- Tableau Match PL -->
+  <section class="px-4 pt-8 mb-10 text-white text-center">
+    <div class="flex items-center justify-center gap-4 mb-4 -ml-16">
+      <img src="/assets/logo-pl.png" alt="Premier League Logo" class="w-24 h-24 sm:w-24 sm:h-56" />
+      <h2 class="-ml-8">Match PL à venir</h2>
+    </div>
 
-  <div class="overflow-hidden rounded-3xl border border-white">
-    <TableMatch/>
-  </div>
-</section>
+    <div class="overflow-hidden rounded-3xl border border-white">
+      <TableMatch />
+    </div>
+  </section>
 
+  <!-- Au dessus du footer -->
 
-  <!-- Inscription -->
   <section class="text-center">
     <h2 class="text-2xl mt-10 font-caprisimo">Inscription 2024/25</h2>
     <a href="#" class="custom-link-blanc block mt-2">Rejoins l'équipe ici</a>
     <img src="/assets/players.png" alt="Joueurs Arsenal" class="mx-auto mt-4" />
   </section>
 
+  <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('reservationForm');
+    if (form) {
+      form.addEventListener('submit', function (event) {
+        const matchIdElement = document.getElementById('matchId') as HTMLInputElement;
+        const memberNumberElement = document.getElementById('memberNumber') as HTMLInputElement;
+        const nameElement = document.getElementById('name') as HTMLInputElement;
+        const firstnameElement = document.getElementById('firstname') as HTMLInputElement;
+        const emailElement = document.getElementById('email') as HTMLInputElement;
+        const phoneElement = document.getElementById('phone') as HTMLInputElement;
+        const messageElement = document.getElementById('message') as HTMLTextAreaElement;
+        
+        if (!matchIdElement || !memberNumberElement || !nameElement || !firstnameElement || 
+            !emailElement || !phoneElement || !messageElement) {
+          console.error('One or more form elements not found');
+          event.preventDefault();
+          return;
+        }
+        
+        const matchId = matchIdElement.value.trim();
+        const memberNumber = memberNumberElement.value.trim();
+        const name = nameElement.value.trim();
+        const firstname = firstnameElement.value.trim();
+        const email = emailElement.value.trim();
+        const phone = phoneElement.value.trim();
+        const message = messageElement.value.trim();
+
+        if (!matchId || !memberNumber || !name || !firstname || !email || !phone) {
+          alert('Tous les champs obligatoires doivent être remplis.');
+          event.preventDefault();
+        }
+      });
+    } else {
+      console.error('Le formulaire avec l\'ID "reservationForm" est introuvable.');
+    }
+  });
+</script>
 </Layout>
