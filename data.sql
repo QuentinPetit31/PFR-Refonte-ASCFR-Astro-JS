@@ -71,12 +71,16 @@ CREATE TABLE rencontre (
 ) ENGINE=InnoDB;
 
 -- Table demande
-CREATE TABLE demande (
+CREATE TABLE IF NOT EXISTS demande (
   id_demande INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   date_demande DATETIME,
   commentaire_demande TEXT,
   message_demande TEXT,
-  statut_demande VARCHAR(30) DEFAULT 'en attente'
+  statut_demande VARCHAR(30) DEFAULT 'en attente',
+  nom_demande VARCHAR(100), 
+  prenom_demande VARCHAR(100),
+  email_demande VARCHAR(255), 
+  telephone_demande VARCHAR(20)
 ) ENGINE=InnoDB;
 
 -- Table article (sans clé étrangère)
@@ -284,7 +288,7 @@ INSERT INTO sousCategorie (libelle_sousCategorie, id_categorie) VALUES
 ('Rumeurs', 2);
 
 INSERT INTO demande (statut_demande, message_demande, date_demande, commentaire_demande) VALUES
-('en attente', 'Demande pour le match contre Wolves', '2024-08-12 14:30:00', 'Commentaire test');
+('en attente', 'Demande pour le match ID 1', '2024-08-12 14:30:00', 'Je suis sur Londres à cette date');
 
 -- Insertion dans adherent 
 INSERT INTO adherent (numero_adherent, nom_adherent, prenom_adherent, email_adherent, dateInscription_adherent, telephone_adherent, statut_adherent) VALUES
@@ -298,38 +302,38 @@ UPDATE adherent SET id_utilisateur = 1 WHERE id_adherent = 1;
 INSERT INTO rencontre (journee_rencontre, adversaire_rencontre, categorie_rencontre, date_rencontre, lieu_rencontre, deadlineInscription_rencontre, statut_rencontre, placesMax_rencontre, placesDisp_rencontre, ouvertureDemande_rencontre, competition_rencontre, saison_rencontre) VALUES
 -- Premier League
 -- Matchs d'août - statut "Ouvert"
-(1, 'Manchester City', 'A', '2025-08-16', 'Emirates Stadium', '2025-08-02', 'Ouvert', 15, 10, '2025-08-10', 'Premier League', '2025-2026'),
-(3, 'Tottenham', 'A', '2025-08-30', 'Emirates Stadium', '2025-08-16', 'Ouvert', 15, 8, '2025-08-24', 'Premier League', '2025-2026'),
-
+(1, 'Manchester City', 'A', '2025-08-16', 'Emirates Stadium', '2025-08-10', 'Ouvert', 15, 10, '2025-08-02', 'Premier League', '2025-2026'),
+(3, 'Tottenham', 'A', '2025-08-30', 'Emirates Stadium', '2025-08-24', 'Ouvert', 15, 8, '2025-08-11', 'Premier League', '2025-2026'),
 -- Matchs de septembre à mai - statut "Fermé"
-(5, 'Newcastle', 'B', '2025-09-13', 'Emirates Stadium', '2025-08-30', 'Fermé', 10, 10, '2025-09-07', 'Premier League', '2025-2026'),
-(7, 'West Ham', 'B', '2025-09-27', 'Emirates Stadium', '2025-09-13', 'Fermé', 10, 10, '2025-09-21', 'Premier League', '2025-2026'),
-(9, 'Brighton', 'B', '2025-10-18', 'Emirates Stadium', '2025-10-04', 'Fermé', 10, 10, '2025-10-12', 'Premier League', '2025-2026'),
-(12, 'Bournemouth', 'C', '2025-11-08', 'Emirates Stadium', '2025-10-25', 'Fermé', 10, 10, '2025-11-02', 'Premier League', '2025-2026'),
-(14, 'Liverpool', 'A', '2025-11-29', 'Emirates Stadium', '2025-11-15', 'Fermé', 15, 15, '2025-11-23', 'Premier League', '2025-2026'),
-(16, 'Chelsea', 'A', '2025-12-13', 'Emirates Stadium', '2025-11-29', 'Fermé', 15, 15, '2025-12-07', 'Premier League', '2025-2026'),
-(18, 'Nottingham Forest', 'C', '2025-12-26', 'Emirates Stadium', '2025-12-12', 'Fermé', 10, 10, '2025-12-20', 'Premier League', '2025-2026'),
-(20, 'Everton', 'C', '2026-01-03', 'Emirates Stadium', '2025-12-20', 'Fermé', 10, 10, '2025-12-28', 'Premier League', '2025-2026'),
-(22, 'Fulham', 'C', '2026-01-17', 'Emirates Stadium', '2026-01-03', 'Fermé', 10, 10, '2026-01-11', 'Premier League', '2025-2026'),
-(24, 'Crystal Palace', 'C', '2026-02-07', 'Emirates Stadium', '2026-01-24', 'Fermé', 10, 10, '2026-02-01', 'Premier League', '2025-2026'),
-(26, 'Manchester United', 'A', '2026-02-28', 'Emirates Stadium', '2026-02-14', 'Fermé', 15, 15, '2026-02-22', 'Premier League', '2025-2026'),
-(28, 'Leicester City', 'B', '2026-03-14', 'Emirates Stadium', '2026-02-28', 'Fermé', 10, 10, '2026-03-08', 'Premier League', '2025-2026'),
-(30, 'Southampton', 'C', '2026-04-04', 'Emirates Stadium', '2026-03-21', 'Fermé', 10, 10, '2026-03-29', 'Premier League', '2025-2026'),
-(32, 'Brentford', 'C', '2026-04-18', 'Emirates Stadium', '2026-04-04', 'Fermé', 10, 10, '2026-04-12', 'Premier League', '2025-2026'),
-(35, 'Aston Villa', 'B', '2026-05-02', 'Emirates Stadium', '2026-04-18', 'Fermé', 10, 10, '2026-04-26', 'Premier League', '2025-2026'),
-(38, 'Wolverhampton', 'B', '2026-05-17', 'Emirates Stadium', '2026-05-03', 'Fermé', 10, 10, '2026-05-11', 'Premier League', '2025-2026'),
+(5, 'Newcastle', 'B', '2025-09-13', 'Emirates Stadium', '2025-08-30', 'Fermé', 10, 10, '2025-08-23', 'Premier League', '2025-2026'),
+(7, 'West Ham', 'B', '2025-09-27', 'Emirates Stadium', '2025-09-13', 'Fermé', 10, 10, '2025-09-06', 'Premier League', '2025-2026'),
+(9, 'Brighton', 'B', '2025-10-18', 'Emirates Stadium', '2025-10-04', 'Fermé', 10, 10, '2025-09-27', 'Premier League', '2025-2026'),
+(12, 'Bournemouth', 'C', '2025-11-08', 'Emirates Stadium', '2025-10-25', 'Fermé', 10, 10, '2025-10-18', 'Premier League', '2025-2026'),
+(14, 'Liverpool', 'A', '2025-11-29', 'Emirates Stadium', '2025-11-15', 'Fermé', 15, 15, '2025-11-08', 'Premier League', '2025-2026'),
+(16, 'Chelsea', 'A', '2025-12-13', 'Emirates Stadium', '2025-11-29', 'Fermé', 15, 15, '2025-11-22', 'Premier League', '2025-2026'),
+(18, 'Nottingham Forest', 'C', '2025-12-26', 'Emirates Stadium', '2025-12-12', 'Fermé', 10, 10, '2025-12-05', 'Premier League', '2025-2026'),
+(20, 'Everton', 'C', '2026-01-03', 'Emirates Stadium', '2025-12-20', 'Fermé', 10, 10, '2025-12-13', 'Premier League', '2025-2026'),
+(22, 'Fulham', 'C', '2026-01-17', 'Emirates Stadium', '2026-01-03', 'Fermé', 10, 10, '2025-12-27', 'Premier League', '2025-2026'),
+(24, 'Crystal Palace', 'C', '2026-02-07', 'Emirates Stadium', '2026-01-24', 'Fermé', 10, 10, '2026-01-17', 'Premier League', '2025-2026'),
+(26, 'Manchester United', 'A', '2026-02-28', 'Emirates Stadium', '2026-02-14', 'Fermé', 15, 15, '2026-02-07', 'Premier League', '2025-2026'),
+(28, 'Leicester City', 'B', '2026-03-14', 'Emirates Stadium', '2026-02-28', 'Fermé', 10, 10, '2026-02-21', 'Premier League', '2025-2026'),
+(30, 'Southampton', 'C', '2026-04-04', 'Emirates Stadium', '2026-03-21', 'Fermé', 10, 10, '2026-03-14', 'Premier League', '2025-2026'),
+(32, 'Brentford', 'C', '2026-04-18', 'Emirates Stadium', '2026-04-04', 'Fermé', 10, 10, '2026-03-28', 'Premier League', '2025-2026'),
+(35, 'Aston Villa', 'B', '2026-05-02', 'Emirates Stadium', '2026-04-18', 'Fermé', 10, 10, '2026-04-11', 'Premier League', '2025-2026'),
+(38, 'Wolverhampton', 'B', '2026-05-17', 'Emirates Stadium', '2026-05-03', 'Fermé', 10, 10, '2026-04-26', 'Premier League', '2025-2026'),
+
 -- Champions League (groupes)
-(null, 'Bayern Munich', 'A', '2024-09-17', 'Emirates Stadium', '2024-09-03', 'Ouvert', 15, 2, '2024-09-11', 'Champions League', '2024-2025'),
-(null, 'Barcelona', 'A', '2024-10-22', 'Emirates Stadium', '2024-10-08', 'Ouvert', 15, 0, '2024-10-16', 'Champions League', '2024-2025'),
-(null, 'PSG', 'A', '2024-11-26', 'Emirates Stadium', '2024-11-12', 'Ouvert', 15, 3, '2024-11-20', 'Champions League', '2024-2025'),
+(null, 'Bayern Munich', 'A', '2024-09-17', 'Emirates Stadium', '2024-09-03', 'Ouvert', 15, 2, '2024-08-27', 'Champions League', '2024-2025'),
+(null, 'Barcelona', 'A', '2024-10-22', 'Emirates Stadium', '2024-10-08', 'Ouvert', 15, 0, '2024-09-30', 'Champions League', '2024-2025'),
+(null, 'PSG', 'A', '2024-11-26', 'Emirates Stadium', '2024-11-12', 'Ouvert', 15, 3, '2024-11-05', 'Champions League', '2024-2025'),
 
 -- FA Cup (hypothétiques)
-(null, 'Leeds United', 'B', '2025-01-25', 'Emirates Stadium', '2025-01-11', 'Ouvert', 10, 9, '2025-01-19', 'FA Cup', '2024-2025'),
-(null, 'Sheffield United', 'C', '2025-02-15', 'Emirates Stadium', '2025-02-01', 'Ouvert', 10, 10, '2025-02-09', 'FA Cup', '2024-2025'),
+(null, 'Leeds United', 'B', '2025-01-25', 'Emirates Stadium', '2025-01-11', 'Ouvert', 10, 9, '2025-01-04', 'FA Cup', '2024-2025'),
+(null, 'Sheffield United', 'C', '2025-02-15', 'Emirates Stadium', '2025-02-01', 'Ouvert', 10, 10, '2025-01-25', 'FA Cup', '2024-2025'),
 
 -- Carabao Cup (hypothétiques)
-(null, 'Burnley', 'C', '2024-09-23', 'Emirates Stadium', '2024-09-09', 'Ouvert', 10, 10, '2024-09-17', 'Carabao Cup', '2024-2025'),
-(null, 'Leicester City', 'C', '2024-10-29', 'Emirates Stadium', '2024-10-15', 'Ouvert', 10, 9, '2024-10-23', 'Carabao Cup', '2024-2025');
+(null, 'Burnley', 'C', '2024-09-23', 'Emirates Stadium', '2024-09-09', 'Ouvert', 10, 10, '2024-09-02', 'Carabao Cup', '2024-2025'),
+(null, 'Leicester City', 'C', '2024-10-29', 'Emirates Stadium', '2024-10-15', 'Ouvert', 10, 9, '2024-10-08', 'Carabao Cup', '2024-2025');
 
 -- Ajouter des relations pour les exemples
 INSERT INTO formuler (id_adherent, id_demande) VALUES (1, 1);

@@ -1,21 +1,34 @@
-// src/pages/api/ajouter-demande.ts
 export const prerender = false;
 
 import type { APIRoute } from "astro";
 import mysql from "mysql2/promise";
 
+// Définition de l'interface pour le corps de la requête
+interface ReservationRequestBody {
+  matchId: number;
+  memberNumber: string;
+  name: string;
+  firstname: string;
+  email: string;
+  phone: string;
+  message?: string; // Optionnel
+}
+
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const body = await request.json(); // Lecture des données JSON envoyées dans la requête
+    // Lecture et typage des données JSON envoyées dans la requête
+    const body: ReservationRequestBody = await request.json();
 
     // Récupération des valeurs depuis le corps de la requête
-    const matchId = body.matchId || null;
-    const memberNumber = body.memberNumber || null;
-    const name = body.name || null;
-    const firstname = body.firstname || null;
-    const email = body.email || null;
-    const phone = body.phone || null;
-    const message = body.message || null;
+    const { matchId, memberNumber, name, firstname, email, phone, message } = body;
+
+    // Validation des champs obligatoires
+    if (!matchId || !memberNumber || !name || !firstname || !email || !phone) {
+      return new Response(
+        JSON.stringify({ success: false, message: "Tous les champs obligatoires doivent être remplis" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
 
     // Connexion à la base de données
     const connection = await mysql.createConnection({
@@ -31,7 +44,14 @@ export const POST: APIRoute = async ({ request }) => {
       `INSERT INTO demande 
         (date_demande, commentaire_demande, message_demande, statut_demande, nom_demande, prenom_demande, email_demande, telephone_demande) 
         VALUES (NOW(), ?, ?, 'en attente', ?, ?, ?, ?)`,
-      [message, `Demande pour le match ID ${matchId}`, name, firstname, email, phone]
+      [
+        message || "",
+        `Demande pour le match ID ${matchId}`,
+        name,
+        firstname,
+        email,
+        phone,
+      ]
     );
 
     await connection.end();
